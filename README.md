@@ -1,9 +1,9 @@
 ## Uppgift 6
 
 För att köra programmet krävs följande:
+Öppna programmet i valfri lämplig textredigerare, exempelvis VSCode. 
+Skriv in följande i terminalen:
 1. npm install
-   
-  Öppna programmet i valfri lämplig textredigerare, exempelvis VSCode
 
 2. npm run dev
 
