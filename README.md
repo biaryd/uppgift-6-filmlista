@@ -4,6 +4,7 @@ För att köra programmet krävs följande:
 1. npm install
    
   Öppna programmet i valfri lämplig textredigerare, exempelvis VSCode
+
 2. npm run dev
 
 
