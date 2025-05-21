@@ -1,95 +1,67 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import MovieForm from '../components/MovieForm';
+import Movie from '../components/Movie';
+import OrderByAlpha from '../components/OrderByAlpha';
+import OrderByGrade from '../components/OrderByGrade';
+
 
 export default function Home() {
+  const [movies, setMovies] = useState([]);
+  
+  //Lägger till en film
+  const addMovie = (movie) => {
+    setMovies([...movies, movie]);
+  };
+  
+  //Tar bort en film
+  const deleteMovie = (index) => {
+    const newMovies = [...movies];
+    newMovies.splice(index, 1);
+    setMovies(newMovies);
+  };
+  
+  //Sorterar filmer alfabetiskt
+  const sortByAlpha = () => {
+    const sortedMovies = [...movies].sort((a, b) => 
+      a.title.localeCompare(b.title)
+    );
+    setMovies(sortedMovies);
+  };
+  
+  //Sorterar filmer efter betyg
+  const sortByGrade = () => {
+    const sortedMovies = [...movies].sort((a, b) => 
+      b.grade - a.grade
+    );
+    setMovies(sortedMovies);
+  };
+  
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <main>
+      <div className="movie-app">
+        <h1>Min filmlista</h1>
+        
+        <MovieForm onAddMovie={addMovie} />
+        
+        <h2>Inlagda filmer</h2>
+        <div className="sort-buttons">
+          <OrderByAlpha onClick={sortByAlpha} />
+          <OrderByGrade onClick={sortByGrade} />
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        
+        <ul className="movies-list">
+          {movies.map((movie, index) => (
+            <Movie 
+              key={index}
+              title={movie.title}
+              grade={movie.grade}
+              onDelete={() => deleteMovie(index)}
+            />
+          ))}
+        </ul>
+      </div>
+    </main>
   );
 }
