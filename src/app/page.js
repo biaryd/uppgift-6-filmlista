@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import MovieForm from '../components/MovieForm';
 import Movie from '../components/Movie';
 import OrderByAlpha from '../components/OrderByAlpha';
